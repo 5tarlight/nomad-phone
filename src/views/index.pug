@@ -15,3 +15,13 @@ html(lang="en")
                 else
                     option(value=country.code)=`${country.flag} ${country.name}`
             input(type="submit", value="Search")
+
+
+        if error || (numbers && numbers.length === 0)
+            span There are no numbers available on your selected country
+        else if numbers
+            ul
+            each number in numbers
+                li
+                    span=number.friendly_name
+                    span=` $${price}`
