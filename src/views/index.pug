@@ -16,12 +16,11 @@ html(lang="en")
                     option(value=country.code)=`${country.flag} ${country.name}`
             input(type="submit", value="Search")
 
-
         if error || (numbers && numbers.length === 0)
             span There are no numbers available on your selected country
         else if numbers
+            span=`${searchingBy} number price per month: $${price}`
             ul
             each number in numbers
                 li
                     span=number.friendly_name
-                    span=` $${price}`

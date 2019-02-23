@@ -17,9 +17,14 @@ const PricingApi = axios.create({
   auth
 });
 
-export const numbersByCountry = async (countryCode: string) =>
+export const numbersByCountry = async (
+  countryCode: string,
+  local: boolean = false
+) =>
   AccountApi.get(
-    `AvailablePhoneNumbers/${countryCode}/Mobile.json?SmsEnabled=true&ExcludeAllAddressRequired=true`
+    `AvailablePhoneNumbers/${countryCode}/${
+      local ? "Local" : "Mobile"
+    }.json?SmsEnabled=true&ExcludeAllAddressRequired=true`
   );
 
 export const priceByCountry = async (countryCode: string) =>

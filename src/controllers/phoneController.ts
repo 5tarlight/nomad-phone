@@ -1,6 +1,7 @@
 import countries from "../countries";
 import { Request, Response } from "express";
 import { numbersByCountry, priceByCountry } from "../twilio";
+import { extractPrice } from "../utils";
 
 const searchNumbers = async (req: Request, res: Response) => {
   const {
@@ -9,17 +10,17 @@ const searchNumbers = async (req: Request, res: Response) => {
   let numbers = null;
   let error = false;
   let price;
+  let isLocal = country === "US" || country === "CA" || country === "PR";
   if (country) {
     try {
-      const { data: numbersData } = await numbersByCountry(country);
-      numbers = numbersData.available_phone_numbers;
-      const { data: priceData } = await priceByCountry(country);
-      const localPrice = priceData.phone_number_prices.filter(
-        number => number.number_type === "local"
-      );
-      if (localPrice.length !== 0) {
-        price = localPrice[0].base_price;
-      }
+      const {
+        data: { available_phone_numbers }
+      } = await numbersByCountry(country, isLocal);
+      numbers = available_phone_numbers;
+      const {
+        data: { phone_number_prices }
+      } = await priceByCountry(country);
+      price = extractPrice(phone_number_prices, isLocal);
     } catch (e) {
       console.log(e);
       error = true;
