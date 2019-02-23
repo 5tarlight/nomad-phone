@@ -31,7 +31,7 @@ New Message Flow:
 1. New Message is sent to # ✅
 2. Twilio hits endpoint ✅
 3. Create new message on DB
-4. Send mail to user (notification)
+4. Send mail to user (notification) ✅
 
 Bullshit Flow:
 

@@ -8,6 +8,7 @@ import {
   getInbox
 } from "../twilio";
 import { extractPrice } from "../utils";
+import { sendNewSMSMail } from "../mailgun";
 
 const searchNumbers = async (req: Request, res: Response) => {
   const {
@@ -74,7 +75,7 @@ const rentPhoneNumber = async (req, res) => {
     } catch (error) {
       console.log(error);
       // To Do: Make flash message saying error
-      res.render(`/?country=${countryCode}`);
+      res.redirect(`/?country=${countryCode}`);
     }
   }
 };
@@ -121,11 +122,15 @@ const getPhoneNumberInbox = async (req, res) => {
 
 const handleNewMessage = (req, res) => {
   const {
-    body: { From, Body }
+    body: { From, Body, To }
   } = req;
-  // To Do: Send Email to Person with Notification
-  console.log(From, Body);
+  console.log(From, Body, To);
   res.end().status(200);
+  try {
+    sendNewSMSMail(From, Body, To);
+  } catch (e) {
+    console.log(e);
+  }
 };
 
 export default {
