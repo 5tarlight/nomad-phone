@@ -4,7 +4,8 @@ import {
   numbersByCountry,
   priceByCountry,
   buyPhoneNumber,
-  releasePhoneNumberById
+  releasePhoneNumberById,
+  getInbox
 } from "../twilio";
 import { extractPrice } from "../utils";
 
@@ -99,8 +100,31 @@ const releasePhoneNumber = async (req, res) => {
   }
 };
 
+const getPhoneNumberInbox = async (req, res) => {
+  const {
+    params: { phoneNumber }
+  } = req;
+  let error;
+  let messages;
+  try {
+    // TO DO : Check that the user OWNS the phone number
+    const {
+      data: { messages: receivedMessages }
+    } = await getInbox(phoneNumber);
+    messages = receivedMessages;
+  } catch (e) {
+    console.log(e);
+    error = "Cant' check Inbox at this time";
+  }
+  res.render("inbox", { phoneNumber, error, messages });
+};
+
+const handleNewMessage = (req, res) => {};
+
 export default {
   searchNumbers,
   rentPhoneNumber,
-  releasePhoneNumber
+  releasePhoneNumber,
+  getPhoneNumberInbox,
+  handleNewMessage
 };

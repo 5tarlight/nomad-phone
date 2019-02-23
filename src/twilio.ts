@@ -45,7 +45,7 @@ export const buyPhoneNumber = (number: string, username: string) => {
 };
 
 export const getPhoneNumbersByName = (name: string) =>
-  AccountApi.get("IncomingPhoneNumbers.json", {
+  AccountApi.get("IncomingPhoneNumbers.json?PageSize=1000", {
     params: {
       FriendlyName: name
     }
@@ -53,3 +53,6 @@ export const getPhoneNumbersByName = (name: string) =>
 
 export const releasePhoneNumberById = (id: string) =>
   AccountApi.delete(`IncomingPhoneNumbers/${id}.json`);
+
+export const getInbox = (phoneNumber: String) =>
+  AccountApi.get(`Messages.json?To=${phoneNumber}&PageSize=1000`);

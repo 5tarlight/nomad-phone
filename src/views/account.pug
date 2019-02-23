@@ -11,4 +11,7 @@ html(lang="en")
             each number in numbers
                 li
                     span=number.phone_number
-                    a(href=`/release/${number.phone_number}?pid=${number.sid}`) Release this number
+                    div
+                        a(href=`/release/${number.phone_number}?pid=${number.sid}`) Release this number
+                        p |
+                        a(href=`/inbox/${number.phone_number}`) Check inbox
