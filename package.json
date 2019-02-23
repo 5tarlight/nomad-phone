@@ -16,6 +16,7 @@
     "express-session": "^1.15.6",
     "morgan": "^1.9.1",
     "pug": "^2.0.3",
+    "qs": "^6.6.0",
     "twilio": "^3.28.1"
   },
   "devDependencies": {

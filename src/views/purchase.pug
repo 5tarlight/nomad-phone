@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        title Rent a Phone Number
+    body
+        if !confirmed && !error
+            p=`You are about to buy the phone number ${phoneNumber} from ${country.name} ${country.flag}`
+            p=`The price of this phone number is $${price} per month`
+            a(href="?confirmed=true") Confirm?
+        if error
+            span=error

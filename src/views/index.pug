@@ -9,7 +9,7 @@ html(lang="en")
         form(action="/",method="get")
             span Buy phone by country
             select#countries(name="country")
-              each country in countries
+              each country in availableCountries
                 if country.code === searchingBy
                     option(value=country.code, selected)=`${country.flag} ${country.name}`
                 else
@@ -19,8 +19,9 @@ html(lang="en")
         if error || (numbers && numbers.length === 0)
             span There are no numbers available on your selected country
         else if numbers
-            span=`${searchingBy} number price per month: $${price}`
+            span=`Price per month: $${price}`
             ul
             each number in numbers
                 li
                     span=number.friendly_name
+                    a(href=`/rent/${searchingBy}/${number.phone_number}`) Rent

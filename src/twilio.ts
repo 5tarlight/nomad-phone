@@ -1,4 +1,6 @@
 import axios from "axios";
+import querystring from "querystring";
+import { isLocal } from "./utils";
 
 const auth = {
   username: process.env.TWILIO_SID || "",
@@ -17,15 +19,34 @@ const PricingApi = axios.create({
   auth
 });
 
-export const numbersByCountry = async (
-  countryCode: string,
-  local: boolean = false
-) =>
+export const numbersByCountry = (countryCode: string) =>
   AccountApi.get(
     `AvailablePhoneNumbers/${countryCode}/${
-      local ? "Local" : "Mobile"
+      isLocal(countryCode) ? "Local" : "Mobile"
     }.json?SmsEnabled=true&ExcludeAllAddressRequired=true`
   );
 
-export const priceByCountry = async (countryCode: string) =>
+export const priceByCountry = (countryCode: string) =>
   PricingApi.get(`PhoneNumbers/Countries/${countryCode}`);
+
+export const buyPhoneNumber = (number: string, username: string) => {
+  return AccountApi.post(
+    `IncomingPhoneNumbers.json?`,
+    querystring.stringify({
+      PhoneNumber: number,
+      FriendlyName: username
+    }),
+    {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded"
+      }
+    }
+  );
+};
+
+export const getPhoneNumbersByName = (name: string) =>
+  AccountApi.get("IncomingPhoneNumbers.json", {
+    params: {
+      FriendlyName: name
+    }
+  });

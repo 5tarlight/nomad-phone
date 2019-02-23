@@ -1,4 +1,4 @@
-export default [
+export const availableCountries = [
   { name: "United States", dial_code: "+1", code: "US", flag: "🇺🇸" },
   { name: "Canada", dial_code: "+1", code: "CA", flag: "🇨🇦" },
   { name: "Australia", dial_code: "+61", code: "AU", flag: "🇦🇺" },
@@ -12,3 +12,6 @@ export default [
   { name: "Sweden", dial_code: "+46", code: "SE", flag: "🇸🇪" },
   { name: "Switzerland", dial_code: "+41", code: "CH", flag: "🇨🇭" }
 ];
+
+export const getName = (code: string) =>
+  availableCountries.filter(country => country.code === code)[0];

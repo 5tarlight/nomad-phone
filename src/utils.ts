@@ -4,9 +4,12 @@ interface IPrice {
   current_price: string;
 }
 
-export const extractPrice = (prices: [IPrice], local = false) => {
+export const isLocal = (code: string) =>
+  code === "US" || code === "CA" || code === "PR";
+
+export const extractPrice = (prices: [IPrice], code: string) => {
   const price = prices.filter(price => {
-    if (local) {
+    if (isLocal(code)) {
       return price.number_type === "local";
     } else {
       return price.number_type === "mobile";

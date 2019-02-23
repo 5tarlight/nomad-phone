@@ -7,7 +7,7 @@ import cookieParser from "cookie-parser";
 import flash from "express-flash";
 import session from "express-session";
 import phoneRouter from "./routers/phoneRouter";
-import "./twilio";
+import accountRouter from "./routers/accountRouter";
 
 const PORT = process.env.PORT || 4000;
 
@@ -30,6 +30,7 @@ app.use(
 app.use(flash());
 
 app.use("/", phoneRouter);
+app.use("/account", accountRouter);
 
 const handleListening = () =>
   console.log(`✅ Listening on http://localhost:${PORT}`);
