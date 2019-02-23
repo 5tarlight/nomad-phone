@@ -7,3 +7,8 @@ html(lang="en")
         title Account | Nomad Phone
     body
         h1 Here are all the numbers you have rented
+        ul
+            each number in numbers
+                li
+                    span=number.phone_number
+                    a(href=`/release/${number.phone_number}?pid=${number.sid}`) Release this number

@@ -50,3 +50,6 @@ export const getPhoneNumbersByName = (name: string) =>
       FriendlyName: name
     }
   });
+
+export const releasePhoneNumberById = (id: string) =>
+  AccountApi.delete(`IncomingPhoneNumbers/${id}.json`);

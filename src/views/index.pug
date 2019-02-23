@@ -21,7 +21,7 @@ html(lang="en")
         else if numbers
             span=`Price per month: $${price}`
             ul
-            each number in numbers
-                li
-                    span=number.friendly_name
-                    a(href=`/rent/${searchingBy}/${number.phone_number}`) Rent
+                each number in numbers
+                    li
+                        span=number.friendly_name
+                        a(href=`/rent/${searchingBy}/${number.phone_number}`) Rent
