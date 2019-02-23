@@ -119,7 +119,14 @@ const getPhoneNumberInbox = async (req, res) => {
   res.render("inbox", { phoneNumber, error, messages });
 };
 
-const handleNewMessage = (req, res) => {};
+const handleNewMessage = (req, res) => {
+  const {
+    body: { From, Body }
+  } = req;
+  // To Do: Send Email to Person with Notification
+  console.log(From, Body);
+  res.end().status(200);
+};
 
 export default {
   searchNumbers,
