@@ -244,9 +244,8 @@ const afterLogin = (req, res) => {
   const {
     session: { continuePurchase, previousPage }
   } = req;
+  req.session.continuePurchase = req.session.previousPage = null;
   res.redirect(continuePurchase || previousPage || "/dashboard");
-  delete req.session.continuePurchase;
-  delete req.session.previousPage;
 };
 
 export default {
