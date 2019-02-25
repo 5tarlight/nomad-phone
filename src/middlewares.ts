@@ -8,6 +8,7 @@ export const onlyPrivate = (req, res, next) => {
     next();
   } else {
     req.flash("error", "That's a private page");
+    req.session.previousPage = req.originalUrl;
     res.redirect("/log-in");
   }
 };

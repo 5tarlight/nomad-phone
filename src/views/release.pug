@@ -1,14 +1,8 @@
-<!DOCTYPE html>
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        meta(http-equiv="X-UA-Compatible", content="ie=edge")
-        title Rent a Phone Number
-    body
-        if !confirmed && !error
-            p=`You are about to release the phone number ${phoneNumber}.`
-            p=`You will stop getting messages to this number and you won't be able to rent it back.`
-            a(href=`?confirmed=true&pid=${pid}`) Confirm?
-        if error
-            span=error
+extends templates/layout
+
+block content    
+    if !confirmed && !error
+        p=`You are about to release the phone number ${phoneNumber}.`
+        p=`You will stop getting messages to this number and you won't be able to rent it back.`
+        a(href=`?confirmed=true&pid=${pid}`) Confirm?
+    

@@ -137,7 +137,7 @@ const changeEmail = async (req, res) => {
           data: { verificationSecret: newSecret, isVerified: false, email }
         });
         sendVerificationEmail(user.email, newSecret);
-        req.flash("warning", "Email changed. You need to verify it again");
+        req.flash("info", "Email changed. You need to verify it again");
         return res.redirect("/users/verify-email");
       } catch (error) {
         error = "Can't update email, try again later";
@@ -240,7 +240,17 @@ const resetPassword = async (req, res) => {
   res.render("reset-password", { title: "Reset Password", error, expired });
 };
 
+const afterLogin = (req, res) => {
+  const {
+    session: { continuePurchase, previousPage }
+  } = req;
+  res.redirect(continuePurchase || previousPage || "/dashboard");
+  delete req.session.continuePurchase;
+  delete req.session.previousPage;
+};
+
 export default {
+  afterLogin,
   dashboard,
   account,
   createAccount,

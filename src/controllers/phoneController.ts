@@ -9,6 +9,7 @@ import {
 } from "../twilio";
 import { extractPrice } from "../utils";
 import { sendNewSMSMail } from "../mailgun";
+import { prisma } from "../../generated/prisma-client";
 
 const searchNumbers = async (req: Request, res: Response) => {
   const {
@@ -44,12 +45,10 @@ const searchNumbers = async (req: Request, res: Response) => {
 
 const rentPhoneNumber = async (req, res) => {
   const {
-    query: { confirmed }
+    query: { confirmed },
+    params: { countryCode, phoneNumber },
+    user
   } = req;
-  const {
-    params: { countryCode, phoneNumber }
-  } = req;
-
   if (!confirmed) {
     try {
       const {
@@ -62,43 +61,77 @@ const rentPhoneNumber = async (req, res) => {
         price: extractPrice(phone_number_prices, countryCode)
       });
     } catch (e) {
-      // To Do: Make Flash
+      req.flash("error", "Something happened!");
       console.log(e);
       res.redirect("/");
     }
   } else if (Boolean(confirmed) === true) {
-    console.log(phoneNumber);
-    try {
-      // To Do: Get the real username!
-      await buyPhoneNumber(phoneNumber, "Nomad Phone");
-      // To Do: Make flash message saying success
-      res.redirect("/account");
-    } catch (error) {
-      console.log(error);
-      // To Do: Make flash message saying error
-      res.redirect(`/?country=${countryCode}`);
+    if (!user) {
+      req.session.continuePurchase = `/numbers/rent/${countryCode}/${phoneNumber}`;
+      req.flash("info", "Create an account to continue with your purchase");
+      res.redirect("/create-account");
+    } else {
+      try {
+        const { id } = user;
+        const {
+          data: { sid }
+        } = await buyPhoneNumber(phoneNumber, id);
+        await prisma.createNumber({
+          number: phoneNumber,
+          twilioId: sid,
+          owner: {
+            connect: {
+              id
+            }
+          }
+        });
+        req.flash("success", "The number has been purchased!");
+        res.redirect("/dashboard");
+      } catch (error) {
+        console.log(error);
+        req.flas(
+          "error",
+          "There was an error renting this phone number, choose a different one"
+        );
+        res.redirect(`/?country=${countryCode}`);
+      }
     }
   }
 };
 
 const releasePhoneNumber = async (req, res) => {
   const {
-    query: { confirmed, pid }
+    query: { confirmed, pid },
+    params: { phoneNumber },
+    user
   } = req;
-  const {
-    params: { phoneNumber }
-  } = req;
+  const exists = await prisma.$exists.number({
+    AND: [{ owner: { id: user.id } }, { number: phoneNumber, twilioId: pid }]
+  });
+  if (!exists) {
+    req.flash("error", "Number not found");
+    return res.redirect("/dashboard");
+  }
   if (confirmed && pid) {
     try {
-      // TO Do: Flash Message with deletion success
+      req.flash("success", "This number has been deleted from your account");
       await releasePhoneNumberById(pid);
+      await prisma.deleteNumber({ twilioId: pid, number: phoneNumber });
     } catch (e) {
-      // To Do: Flash message with error
+      req.flash(
+        "error",
+        "Could not delete this number from your account, try again later."
+      );
       console.log(e);
     }
-    res.redirect("/account");
+    res.redirect("/dashboard");
   } else {
-    res.render("release", { phoneNumber, confirmed: false, pid });
+    res.render("release", {
+      phoneNumber,
+      confirmed: false,
+      pid,
+      title: "Release number"
+    });
   }
 };
 
