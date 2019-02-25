@@ -10,4 +10,10 @@ usersRouter
   .get(usersController.verifyEmail)
   .post(usersController.verifyEmail);
 
+usersRouter
+  .route("/change-password")
+  .all(onlyPrivate)
+  .get(usersController.changePassword)
+  .post(usersController.changePassword);
+
 export default usersRouter;

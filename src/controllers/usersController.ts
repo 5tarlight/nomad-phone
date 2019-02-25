@@ -1,5 +1,5 @@
 import { getPhoneNumbersByName } from "../twilio";
-import { hashPassword, genSecret } from "../utils";
+import { hashPassword, genSecret, checkPassword } from "../utils";
 import { prisma } from "../../generated/prisma-client";
 import { sendVerificationEmail } from "../mailgun";
 
@@ -85,10 +85,42 @@ const verifyEmail = async (req, res) => {
   res.render("verify-email", { title });
 };
 
+const changePassword = async (req, res) => {
+  const title = "Change Password";
+  const {
+    body: { currentPassword, newPassword, confirmNewPassword },
+    method,
+    user
+  } = req;
+  let error;
+  if (method === "POST") {
+    const check = await checkPassword(user.password, currentPassword);
+    if (check) {
+      if (newPassword === confirmNewPassword) {
+        const newHash = await hashPassword(newPassword);
+        await prisma.updateUser({
+          where: { id: user.id },
+          data: { password: newHash }
+        });
+        req.flash("success", "Password Updated");
+        return res.redirect("/dashboard");
+      } else {
+        res.status(400);
+        error = "The new password confirmation does not match";
+      }
+    } else {
+      res.status(400);
+      error = "Your current password is wrong";
+    }
+  }
+  res.render("change-password", { title, error });
+};
+
 export default {
   myAccount,
   createAccount,
   logIn,
   logOut,
-  verifyEmail
+  verifyEmail,
+  changePassword
 };
