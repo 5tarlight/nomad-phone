@@ -3,13 +3,12 @@ import { hashPassword, genSecret, checkPassword } from "../utils";
 import { prisma } from "../../generated/prisma-client";
 import { sendVerificationEmail } from "../mailgun";
 
-const myAccount = async (req, res) => {
-  const USERNAME = "Nomad Phone";
-  // TO Do: Get real user id from req.
+const dashboard = async (req, res) => {
+  const { user } = req;
   try {
     const {
       data: { incoming_phone_numbers }
-    } = await getPhoneNumbersByName(USERNAME);
+    } = await getPhoneNumbersByName(user.id);
     res.render("dashboard", {
       numbers: incoming_phone_numbers,
       title: "Dashboard"
@@ -27,7 +26,6 @@ const createAccount = async (req, res) => {
     const {
       body: { email, password }
     } = req;
-    // Check that email does not exist. Else, send errors
     try {
       const exists = await prisma.$exists.user({ email });
       if (!exists) {
@@ -39,6 +37,8 @@ const createAccount = async (req, res) => {
           verificationSecret: secret
         });
         sendVerificationEmail(email, secret);
+        req.flash("success", "Account created! Log in now");
+        return res.redirect("/log-in");
       } else {
         error = "This user has an account already. Maybe try to log in?";
       }
@@ -116,11 +116,48 @@ const changePassword = async (req, res) => {
   res.render("change-password", { title, error });
 };
 
+const changeEmail = async (req, res) => {
+  const {
+    method,
+    body: { email },
+    user
+  } = req;
+  let error;
+  if (method === "POST") {
+    const isUsed = await prisma.$exists.user({
+      email
+    });
+    if (!isUsed) {
+      const newSecret = genSecret();
+      try {
+        await prisma.updateUser({
+          where: { id: user.id },
+          data: { verificationSecret: newSecret, isVerified: false, email }
+        });
+        sendVerificationEmail(user.email, newSecret);
+        req.flash("warning", "Email changed. You need to verify it again");
+        return res.redirect("/users/verify-email");
+      } catch (error) {
+        error = "Can't update email, try again later";
+      }
+    } else {
+      error = "This email is already in use";
+    }
+  }
+  res.render("change-email", { title: "Change Email", error });
+};
+
+const account = (req, res) => {
+  res.render("account", { title: "Account" });
+};
+
 export default {
-  myAccount,
+  dashboard,
+  account,
   createAccount,
   logIn,
   logOut,
   verifyEmail,
-  changePassword
+  changePassword,
+  changeEmail
 };

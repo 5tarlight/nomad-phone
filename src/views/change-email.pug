@@ -1,0 +1,10 @@
+extends templates/layout
+
+block content
+    if error
+        div
+            span=error
+    form(action="/users/change-email", method="post")
+        input(type="email", placeholder="New Email", name="email", required)
+        input(type="submit", value="Change Email")
+    

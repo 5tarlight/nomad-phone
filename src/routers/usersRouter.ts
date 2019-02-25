@@ -16,4 +16,12 @@ usersRouter
   .get(usersController.changePassword)
   .post(usersController.changePassword);
 
+usersRouter.get("/account", onlyPrivate, usersController.account);
+
+usersRouter
+  .route("/change-email")
+  .all(onlyPrivate)
+  .get(usersController.changeEmail)
+  .post(usersController.changeEmail);
+
 export default usersRouter;
