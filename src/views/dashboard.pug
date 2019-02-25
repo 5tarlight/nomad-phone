@@ -1,0 +1,12 @@
+extends templates/layout
+
+block content
+    h1 Here are all the numbers you have rented
+    ul
+        each number in numbers
+            li
+                span=number.phone_number
+                div
+                    a(href=`/release/${number.phone_number}?pid=${number.sid}`) Release this number
+                    p |
+                    a(href=`/inbox/${number.phone_number}`) Check inbox
