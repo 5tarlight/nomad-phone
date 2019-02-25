@@ -162,7 +162,12 @@ const getPhoneNumberInbox = async (req, res) => {
     console.log(e);
     error = "Can't check Inbox at this time";
   }
-  res.render("inbox", { phoneNumber, error, messages });
+  res.render("inbox", {
+    phoneNumber,
+    error,
+    messages,
+    title: `Inbox for ${phoneNumber}`
+  });
 };
 
 const handleNewMessage = async (req, res) => {
