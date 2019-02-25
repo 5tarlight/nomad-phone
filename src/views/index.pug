@@ -1,27 +1,22 @@
-<!DOCTYPE html>
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        meta(http-equiv="X-UA-Compatible", content="ie=edge")
-        title Nomad Phone
-    body
-        form(action="/",method="get")
-            span Buy phone by country
-            select#countries(name="country")
-              each country in availableCountries
+extends templates/layout
+
+block content
+    form(action="/",method="get")
+        span Buy phone by country
+        select#countries(name="country")
+            each country in availableCountries
                 if country.code === searchingBy
                     option(value=country.code, selected)=`${country.flag} ${country.name}`
                 else
                     option(value=country.code)=`${country.flag} ${country.name}`
-            input(type="submit", value="Search")
+        input(type="submit", value="Search")
 
-        if error || (numbers && numbers.length === 0)
-            span There are no numbers available on your selected country
-        else if numbers
-            span=`Price per month: $${price}`
-            ul
-                each number in numbers
-                    li
-                        span=number.friendly_name
-                        a(href=`/rent/${searchingBy}/${number.phone_number}`) Rent
+    if error || (numbers && numbers.length === 0)
+        span There are no numbers available on your selected country
+    else if numbers
+        span=`Price per month: $${price}`
+        ul
+            each number in numbers
+                li
+                    span=number.friendly_name
+                    a(href=`/rent/${searchingBy}/${number.phone_number}`) Rent

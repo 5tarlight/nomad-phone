@@ -37,7 +37,8 @@ const searchNumbers = async (req: Request, res: Response) => {
     searchingBy: country,
     numbers,
     error,
-    price
+    price,
+    title: "Get SMS from anywhere in the world"
   });
 };
 
@@ -127,6 +128,7 @@ const handleNewMessage = (req, res) => {
   console.log(From, Body, To);
   res.end().status(200);
   try {
+    // TO DO: Find the user that owns this number
     sendNewSMSMail(From, Body, To);
   } catch (e) {
     console.log(e);
