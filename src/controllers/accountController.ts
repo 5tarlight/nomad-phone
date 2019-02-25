@@ -1,5 +1,5 @@
 import { getPhoneNumbersByName } from "../twilio";
-import { hashPassword, genSecret } from "../utils";
+import { hashPassword, genSecret, checkPassword } from "../utils";
 import { prisma } from "../../generated/prisma-client";
 import { sendVerificationEmail } from "../mailgun";
 
@@ -29,8 +29,12 @@ const createAccount = async (req, res) => {
       const exists = await prisma.$exists.user({ email });
       if (!exists) {
         const hash = await hashPassword(password);
-        await prisma.createUser({ email, password: hash });
         const secret = genSecret();
+        await prisma.createUser({
+          email,
+          password: hash,
+          verificationSecret: secret
+        });
         sendVerificationEmail(email, secret);
       } else {
         error = "This user has an account already. Maybe try to log in?";
@@ -42,7 +46,30 @@ const createAccount = async (req, res) => {
   res.render("create-account", { title, error });
 };
 
+const logIn = async (req, res) => {
+  const title = "Log In";
+  let error;
+  if (req.method === "POST") {
+    const {
+      body: { email, password }
+    } = req;
+    const user = await prisma.user({ email });
+    if (user) {
+      const check = await checkPassword(user.password, password);
+      if (check) {
+        // To Do (Log user In)
+      } else {
+        error = "Wrong Password";
+      }
+    } else {
+      error = "This user does not exist. You need to create an account?";
+    }
+  }
+  res.render("login", { title, error });
+};
+
 export default {
   myAccount,
-  createAccount
+  createAccount,
+  logIn
 };

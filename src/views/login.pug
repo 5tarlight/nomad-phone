@@ -1,0 +1,11 @@
+extends templates/layout
+
+block content
+    if error
+        div
+            span=error
+    form(action="/log-in", method="post")
+        input(type="text", placeholder="Email", name="email")
+        input(type="password", placeholder="Password", name="password")
+        input(type="submit", value="Log In")
+    
