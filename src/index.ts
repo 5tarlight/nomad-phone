@@ -6,10 +6,12 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import flash from "express-flash";
 import session from "express-session";
+import passport from "passport";
 import phoneRouter from "./routers/phoneRouter";
-import accountRouter from "./routers/accountRouter";
+import usersRouter from "./routers/usersRouter";
 import globalRouter from "./routers/globalRouter";
 import { localsMiddleware } from "./middlewares";
+import "./passport";
 
 const PORT = process.env.PORT || 4000;
 
@@ -30,11 +32,13 @@ app.use(
   })
 );
 app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(localsMiddleware);
 
 app.use("/", globalRouter);
 app.use("/numbers", phoneRouter);
-app.use("/accounts", accountRouter);
+app.use("/users", usersRouter);
 
 const handleListening = () =>
   console.log(`✅ Listening on http://localhost:${PORT}`);

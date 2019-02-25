@@ -10,7 +10,6 @@ const myAccount = async (req, res) => {
     const {
       data: { incoming_phone_numbers }
     } = await getPhoneNumbersByName(USERNAME);
-    console.log(incoming_phone_numbers);
     res.render("account", { numbers: incoming_phone_numbers });
   } catch (error) {
     console.log(error);
