@@ -13,3 +13,10 @@ type Number {
   number: String!
   owner: User!
 }
+
+type RecoveryKey {
+  id: ID! @unique
+  user: User!
+  key: String!
+  validUntil: String!
+}

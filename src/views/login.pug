@@ -1,11 +1,8 @@
 extends templates/layout
 
 block content
-    if error
-        div
-            span=error
     form(action="/log-in", method="post")
         input(type="email", placeholder="Email", name="email", required)
         input(type="password", placeholder="Password", name="password", required)
         input(type="submit", value="Log In")
-    
+    a(href="/users/forgot-password") Forgot your password?

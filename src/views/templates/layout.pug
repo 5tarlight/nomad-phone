@@ -10,4 +10,7 @@ html(lang="en")
         include ../partials/flash
         include ../partials/header
         main
+            if error
+                div
+                    span=error
             block content
