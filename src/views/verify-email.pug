@@ -1,0 +1,10 @@
+extends templates/layout
+
+block content
+    h1 Verify your email
+    p We have sent you an email with a secret. Tell use the secret to verify your email
+    form(method="post", action="/users/verify-email")
+        input(type="text", placeholder="Secret", name="secret")
+        input(type="submit", value="Verify")
+    p Did not get an email?
+        a(href="?resend=true") Send it again

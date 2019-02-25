@@ -28,7 +28,7 @@ export const sendVerificationEmail = (to: string, secret: string) => {
     subject: "Email Verification",
     html: `
       Your email verification secret is <strong>${secret}</strong>
-      Copy paste it on http://localhost:4000/accounts/verify-email
+      Copy paste it on http://localhost:4000/users/verify-email
     `
   };
   return sendMail(mail);

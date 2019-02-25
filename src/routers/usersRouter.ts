@@ -1,6 +1,13 @@
 import express from "express";
-// import accountController from "../controllers/accountController";
+import usersController from "../controllers/usersController";
+import { onlyPrivate } from "../middlewares";
 
-const accountRouter = express.Router();
+const usersRouter = express.Router();
 
-export default accountRouter;
+usersRouter
+  .route("/verify-email")
+  .all(onlyPrivate)
+  .get(usersController.verifyEmail)
+  .post(usersController.verifyEmail);
+
+export default usersRouter;
