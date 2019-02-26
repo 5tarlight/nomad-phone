@@ -1,6 +1,7 @@
 @import "./reset.css";
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600");
 @import "./utils.css";
+@import "./flash.css";
 
 /*
     Colors:
@@ -87,7 +88,7 @@ body {
   font-size: 22px;
   margin-bottom: 20px;
   all: unset;
-  border-bottom: 3px solid #6772e5;
+  border-bottom: 3px solid #525f7f;
   padding-bottom: 5px;
   margin-right: 10px;
 }
@@ -151,6 +152,11 @@ body {
   font-size: 16px;
   margin-top: 40px;
   display: block;
+}
+
+/* Notifications */
+
+.flash {
 }
 
 /* Create Account  / Log in */

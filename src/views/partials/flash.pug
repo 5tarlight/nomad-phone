@@ -1,7 +1,16 @@
+include ../mixins/flash
 if messages.error
-    span=messages.error    
-else if messages.info
-    span=messages.info
-else if messages.success
-    span=messages.success
-    
+    +flash({
+        type:'error',
+        text:messages.error
+    })
+if messages.info
+    +flash({
+            type:'info',
+            text:messages.info
+        })
+if messages.success
+    +flash({
+        type:'success',
+        text:messages.success
+    })
