@@ -1,11 +1,9 @@
 .search {
-  margin-top: 20vh;
-  min-height: 40vh;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding-bottom: 20vh;
+  padding-bottom: 10vh;
 }
 
 .search .search__hero {
@@ -48,7 +46,7 @@
 }
 
 .search .results {
-  margin-top: 40px;
+  margin: 40px 0px;
   width: 100%;
 }
 
@@ -68,4 +66,9 @@
 
 .results__list .results__number {
   color: #24b47e;
+}
+
+.search .results__new {
+  font-weight: 600;
+  text-decoration: underline;
 }
