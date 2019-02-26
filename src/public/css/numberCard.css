@@ -1,0 +1,54 @@
+.numberCard {
+  box-shadow: 0;
+  box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25),
+    0 18px 36px -18px rgba(0, 0, 0, 0.3), 0 -12px 36px -8px rgba(0, 0, 0, 0.025);
+  width: 100%;
+  max-width: 420px;
+  padding: 10px 20px;
+  position: relative;
+}
+
+.numberCard .numberCard__flag-container {
+  position: absolute;
+  top: -20px;
+  background-color: #24b47e;
+  color: white;
+  border-radius: 15px;
+  padding: 2px 20px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(50, 50, 93, 0.1);
+  font-size: 14px;
+}
+
+.numberCard__flag-container .flag {
+  font-size: 22px;
+  margin-right: 5px;
+}
+
+.numberCard .numberCard__number {
+  margin-top: 30px;
+  font-size: 32px;
+  font-weight: 300;
+  color: #32325d;
+}
+
+.numberCard .numberCard__actions {
+  display: flex;
+  margin-top: 25px;
+  color: #6772e5;
+  font-weight: 600;
+}
+
+.numberCard__actions .numberCard__action {
+  color: #6772e5;
+  text-decoration: underline;
+}
+
+.numberCard__actions .numberCard__action:hover {
+  color: #32325d;
+}
+
+.numberCard__actions .numberCard__divider {
+  margin: 0px 5px;
+}

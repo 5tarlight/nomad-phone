@@ -6,14 +6,14 @@
 @import "./index.css";
 @import "./purchase.css";
 @import "./auth.css";
-
+@import "./dashboard.css";
+@import "./numberCard.css";
 /*
     Colors:
         green: #24b47e
         blue: #6772e5
 
 */
-
 body {
   background-color: #f5f9fc;
   color: #525f7f;

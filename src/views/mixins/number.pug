@@ -1,0 +1,12 @@
+mixin number(number={})
+    .numberCard.whiteCard
+        div.numberCard__flag-container
+            span.flag=number.country.flag
+            span=number.country.name
+        div.numberCard__number
+            a(href=`/numbers/inbox/${number.number}`)=number.number
+        div.numberCard__actions
+            a(href=`/numbers/inbox/${number.number}`).numberCard__action Check inbox
+            span.numberCard__divider |
+            a(href=`/numbers/release/${number.number}?pid=${number.twilioId}`).numberCard__action Stop renting
+        

@@ -1,5 +1,4 @@
 import { availableCountries, getName } from "../countries";
-import { Request, Response } from "express";
 import {
   numbersByCountry,
   priceByCountry,
@@ -11,12 +10,11 @@ import { extractPrice } from "../utils";
 import { sendNewSMSMail } from "../mailgun";
 import { prisma } from "../../generated/prisma-client";
 
-const searchNumbers = async (req: Request, res: Response) => {
+const searchNumbers = async (req, res) => {
   const {
     query: { country }
   } = req;
   let numbers = null;
-  let error = false;
   let price;
   if (country && country !== "NONE") {
     try {
@@ -30,14 +28,13 @@ const searchNumbers = async (req: Request, res: Response) => {
       price = extractPrice(phone_number_prices, country);
     } catch (e) {
       console.log(e);
-      error = true;
+      req.flash("error", "Something went wrong, try again please");
     }
   }
   res.render("index", {
     availableCountries,
     searchingBy: country,
     numbers,
-    error,
     price,
     title: "Get SMS from anywhere in the world"
   });
@@ -79,6 +76,7 @@ const rentPhoneNumber = async (req, res) => {
         } = await buyPhoneNumber(phoneNumber, id);
         await prisma.createNumber({
           number: phoneNumber,
+          country: countryCode,
           twilioId: sid,
           owner: {
             connect: {
@@ -90,7 +88,7 @@ const rentPhoneNumber = async (req, res) => {
         res.redirect("/dashboard");
       } catch (error) {
         console.log(error);
-        req.flas(
+        req.flash(
           "error",
           "There was an error renting this phone number, choose a different one"
         );
@@ -161,7 +159,7 @@ const getPhoneNumberInbox = async (req, res) => {
     messages = receivedMessages;
   } catch (e) {
     console.log(e);
-    error = "Can't check Inbox at this time";
+    req.flash("error", "Can't check Inbox at this time");
   }
   res.render("inbox", {
     phoneNumber,

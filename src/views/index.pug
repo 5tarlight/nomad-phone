@@ -14,8 +14,9 @@ block content
                         else
                             option(value=country.code)=`${country.flag} ${country.name}`
 
-            if error || (numbers && numbers.length === 0)
-                span There are no numbers available on your selected country
+            if (numbers && numbers.length === 0)
+                .results
+                    span.results__title There are no numbers available on your selected country
             else if numbers
                 .results
                     span.results__title Claim a number for just $#{price} per month:

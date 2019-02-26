@@ -1,6 +1,9 @@
+import { getName } from "./countries";
+
 export const localsMiddleware = (req, res, next) => {
   res.locals.currentUser = req.user;
   res.locals.siteName = "Nomad Phone 🌴";
+  res.locals.getCountry = getName;
   next();
 };
 

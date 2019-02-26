@@ -1,4 +1,3 @@
-import { getPhoneNumbersByName } from "../twilio";
 import { hashPassword, genSecret, checkPassword } from "../utils";
 import { prisma } from "../../generated/prisma-client";
 import { sendVerificationEmail, sendPasswordResetEmail } from "../mailgun";
@@ -6,11 +5,9 @@ import { sendVerificationEmail, sendPasswordResetEmail } from "../mailgun";
 const dashboard = async (req, res) => {
   const { user } = req;
   try {
-    const {
-      data: { incoming_phone_numbers }
-    } = await getPhoneNumbersByName(user.id);
+    const numbers = await prisma.user({ id: user.id }).numbers();
     res.render("dashboard", {
-      numbers: incoming_phone_numbers,
+      numbers,
       title: "Dashboard"
     });
   } catch (error) {
@@ -78,7 +75,7 @@ const verifyEmail = async (req, res) => {
         req.flash("success", "Thanks for verifying your email");
         return res.redirect("/dashboard");
       } catch {
-        req.flas("error", "Could not verify email");
+        req.flash("error", "Could not verify email");
       }
     } else {
       req.flash("error", "That secret does not match our records.");
@@ -127,7 +124,7 @@ const changePassword = async (req, res) => {
       }
     } else {
       res.status(400);
-      req.flas("error", "Your current password is wrong");
+      req.flash("error", "Your current password is wrong");
     }
   }
   res.render("change-password", { title });
@@ -212,7 +209,7 @@ const resetPassword = async (req, res) => {
     key = await prisma.recoveryKey({ id });
     user = await prisma.recoveryKey({ id }).user();
   } catch {
-    req.flas("error", "Can't get verification key");
+    req.flash("error", "Can't get verification key");
   }
   const secondsNow = Date.now();
   const isExpired = secondsNow > parseInt(key.validUntil, 10);

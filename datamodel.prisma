@@ -1,6 +1,7 @@
 type User {
   id: ID! @unique
   email: String! @unique
+  name: String
   password: String!
   isVerified: Boolean! @default(value: "false")
   numbers: [Number!]!
@@ -12,6 +13,7 @@ type Number {
   twilioId: String! @unique
   number: String! @unique
   owner: User!
+  country: String! @default(value: "US")
 }
 
 type RecoveryKey {
