@@ -1,11 +1,11 @@
 extends templates/auth
 
 block form
-    .whiteCard.form__container
-        form(action="/create-account", method="post").auth__form
-            input(type="text", placeholder="Email", name="email")
-            input(type="password", placeholder="Password", name="password")
-            input(type="submit", value="Create Account")
-    .form__change-link
-        span Have an account already?
-            a(href="/log-in") Log in! 
+    form(action="/create-account", method="post").auth__form
+        input(type="text", placeholder="Email", name="email")
+        input(type="password", placeholder="Password", name="password")
+        input(type="submit", value="Create Account")
+
+block formLinks
+    span Have an account already?
+        a(href="/log-in") Log in! 

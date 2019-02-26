@@ -70,21 +70,31 @@ const verifyEmail = async (req, res) => {
   }
   if (method === "POST") {
     if (user.verificationSecret === secret) {
-      await prisma.updateUser({
-        where: { id: user.id },
-        data: { verificationSecret: "", isVerified: true }
-      });
-      req.flash("success", "Thanks for verifying your email");
-      return res.redirect("/dashboard");
+      try {
+        await prisma.updateUser({
+          where: { id: user.id },
+          data: { verificationSecret: "", isVerified: true }
+        });
+        req.flash("success", "Thanks for verifying your email");
+        return res.redirect("/dashboard");
+      } catch {
+        req.flas("error", "Could not verify email");
+      }
+    } else {
+      req.flash("error", "That secret does not match our records.");
     }
   } else if (resend) {
     const newSecret = genSecret();
-    await prisma.updateUser({
-      where: { id: user.id },
-      data: { verificationSecret: newSecret }
-    });
-    sendVerificationEmail(user.email, newSecret);
-    req.flash("info", "We just re-sent you a new secret.");
+    try {
+      await prisma.updateUser({
+        where: { id: user.id },
+        data: { verificationSecret: newSecret }
+      });
+      sendVerificationEmail(user.email, newSecret);
+      req.flash("info", "We just re-sent you a new secret.");
+    } catch {
+      req.flash("error", "Could not re-send email");
+    }
   }
   res.render("verify-email", { title: "Verify Email" });
 };
@@ -96,28 +106,31 @@ const changePassword = async (req, res) => {
     method,
     user
   } = req;
-  let error;
   if (method === "POST") {
     const check = await checkPassword(user.password, currentPassword);
     if (check) {
       if (newPassword === confirmNewPassword) {
         const newHash = await hashPassword(newPassword);
-        await prisma.updateUser({
-          where: { id: user.id },
-          data: { password: newHash }
-        });
-        req.flash("success", "Password Updated");
-        return res.redirect("/dashboard");
+        try {
+          await prisma.updateUser({
+            where: { id: user.id },
+            data: { password: newHash }
+          });
+          req.flash("success", "Password Updated");
+          return res.redirect("/dashboard");
+        } catch {
+          req.flash("error", "Could not confirm password");
+        }
       } else {
         res.status(400);
-        error = "The new password confirmation does not match";
+        req.flash("error", "The new password confirmation does not match");
       }
     } else {
       res.status(400);
-      error = "Your current password is wrong";
+      req.flas("error", "Your current password is wrong");
     }
   }
-  res.render("change-password", { title, error });
+  res.render("change-password", { title });
 };
 
 const changeEmail = async (req, res) => {
@@ -126,7 +139,6 @@ const changeEmail = async (req, res) => {
     body: { email },
     user
   } = req;
-  let error;
   if (method === "POST") {
     const isUsed = await prisma.$exists.user({
       email
@@ -142,25 +154,22 @@ const changeEmail = async (req, res) => {
         req.flash("info", "Email changed. You need to verify it again");
         return res.redirect("/users/verify-email");
       } catch (error) {
-        error = "Can't update email, try again later";
+        req.flash("error", "Can't update email, try again later");
       }
     } else {
-      error = "This email is already in use";
+      req.flash("error", "This email is already in use");
     }
   }
-  res.render("change-email", { title: "Change Email", error });
+  res.render("change-email", { title: "Change Email" });
 };
 
-const account = (req, res) => {
-  res.render("account", { title: "Account" });
-};
+const account = (req, res) => res.render("account", { title: "Account" });
 
 const forgotPassword = async (req, res) => {
   const {
     method,
     body: { email }
   } = req;
-  let error;
   const MILISECONDS = 86400000;
   try {
     if (method === "POST") {
@@ -182,13 +191,13 @@ const forgotPassword = async (req, res) => {
         req.flash("successs", "Check your email");
         res.redirect("/");
       } else {
-        error = "There is no user with this email";
+        req.flash("error", "There is no user with this email");
       }
     }
   } catch (e) {
-    error = "Can't Change password";
+    req.flash("error", "Can't Change password");
   }
-  res.render("forgot-password", { title: "Forgot Password", error });
+  res.render("forgot-password", { title: "Forgot Password" });
 };
 
 const resetPassword = async (req, res) => {
@@ -197,15 +206,19 @@ const resetPassword = async (req, res) => {
     body: { password, password2 },
     params: { id }
   } = req;
-  let error;
   let expired = false;
-  const key = await prisma.recoveryKey({ id });
-  const user = await prisma.recoveryKey({ id }).user();
+  let key, user;
+  try {
+    key = await prisma.recoveryKey({ id });
+    user = await prisma.recoveryKey({ id }).user();
+  } catch {
+    req.flas("error", "Can't get verification key");
+  }
   const secondsNow = Date.now();
   const isExpired = secondsNow > parseInt(key.validUntil, 10);
   if (method === "POST") {
     if (password !== password2) {
-      error = "The new password confirmation does not match";
+      req.flash("error", "The new password confirmation does not match");
     } else {
       if (!isExpired) {
         const newHash = await hashPassword(password);
@@ -219,27 +232,22 @@ const resetPassword = async (req, res) => {
         return res.redirect("/log-in");
       } else {
         expired = true;
-        error = "This link has expired";
+        req.flash("error", "This link has expired");
       }
     }
   } else {
-    try {
-      if (key) {
-        if (isExpired) {
-          expired = true;
-          error = "This link has expired";
-        }
-      } else {
+    if (key) {
+      if (isExpired) {
         expired = true;
-        error = "This link has expired";
+        req.flash("error", "This link has expired");
       }
-    } catch {
+    } else {
       expired = true;
-      error = "Can't get verification key";
+      req.flash("error", "This link has expired");
     }
   }
   res.status(400);
-  res.render("reset-password", { title: "Reset Password", error, expired });
+  res.render("reset-password", { title: "Reset Password", expired });
 };
 
 const afterLogin = (req, res) => {

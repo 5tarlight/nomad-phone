@@ -44,3 +44,9 @@
   font-weight: 600;
   text-decoration: underline;
 }
+
+.auth .auth__form-link {
+  margin-top: 10px;
+  display: block;
+  font-weight: 600;
+}

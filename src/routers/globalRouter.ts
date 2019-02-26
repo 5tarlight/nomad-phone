@@ -20,7 +20,7 @@ globalRouter
   .post(
     passport.authenticate("local", {
       failureRedirect: "/log-in",
-      successFlash: "Welcome",
+      successFlash: "Hello 👋🏻",
       failureFlash: "Can't log in. Check email and/or password"
     }),
     usersController.afterLogin
