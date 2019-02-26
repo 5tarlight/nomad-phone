@@ -10,7 +10,8 @@ html(lang="en")
         .wrapper
             include ../partials/notices
             include ../partials/flash
-            include ../partials/header
+            block header
+                include ../partials/header
             main
                 if error
                     div

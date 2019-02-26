@@ -1,14 +1,16 @@
-<!DOCTYPE html>
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        meta(http-equiv="X-UA-Compatible", content="ie=edge")
-        title Rent Phone Number | Nomad Phone
-    body
-        if !confirmed && !error
-            p=`You are about to rent the phone number ${phoneNumber} from ${country.name} ${country.flag}`
-            p=`The price of this phone number is $${price} per month`
-            a(href="?confirmed=true") Confirm?
-        if error
-            span=error
+extends templates/layout
+
+block header
+    span
+
+block content
+    div.confirm__purchase
+        div.whiteCard.confirm__container
+            if !confirmed && !error
+                p=`You are about to rent the phone number ${phoneNumber} from ${country.name} ${country.flag}`
+                p=`The price of this phone number is $${price} per month.`
+                span
+                    a(href="?confirmed=true") Confirm
+            if error
+                span=error
+        span.confirm__help-text You will be charged for the first month only. Cancel at any time.

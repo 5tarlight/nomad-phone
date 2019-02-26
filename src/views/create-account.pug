@@ -1,9 +1,14 @@
 extends templates/layout
 
+block header
+    span
+
 block content
-    form(action="/create-account", method="post")
-        input(type="text", placeholder="Email", name="email")
-        input(type="password", placeholder="Password", name="password")
-        input(type="submit", value="Create Account")
-    span Have an account already?
-        a(href="/log-in") Log in! 
+    .centerAll  
+        .whiteCard.create-account
+            form(action="/create-account", method="post")
+                input(type="text", placeholder="Email", name="email")
+                input(type="password", placeholder="Password", name="password")
+                input(type="submit", value="Create Account")
+            span Have an account already?
+                a(href="/log-in") Log in! 

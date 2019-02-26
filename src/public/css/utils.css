@@ -6,3 +6,16 @@
   color: #24b47e;
   cursor: pointer;
 }
+
+.whiteCard {
+  box-shadow: 0 2px 4px rgba(50, 50, 93, 0.1);
+  border-radius: 5px;
+  background-color: white;
+  padding: 20px;
+}
+
+.centerAll {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

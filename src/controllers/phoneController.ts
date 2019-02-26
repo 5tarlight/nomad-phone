@@ -58,6 +58,7 @@ const rentPhoneNumber = async (req, res) => {
         confirmed,
         country: getName(countryCode),
         phoneNumber,
+        title: "Confirm purchase",
         price: extractPrice(phone_number_prices, countryCode)
       });
     } catch (e) {

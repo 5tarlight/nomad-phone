@@ -5,6 +5,7 @@
 /*
     Colors:
         green: #24b47e
+        blue: #6772e5
 
 */
 
@@ -56,6 +57,7 @@ body {
   align-items: center;
   justify-content: center;
   width: 100%;
+  padding-bottom: 20vh;
 }
 
 .search .search__hero {
@@ -85,7 +87,7 @@ body {
   font-size: 22px;
   margin-bottom: 20px;
   all: unset;
-  border-bottom: 3px solid #24b47e;
+  border-bottom: 3px solid #6772e5;
   padding-bottom: 5px;
   margin-right: 10px;
 }
@@ -115,4 +117,44 @@ body {
 }
 
 .results__list .results__number {
+  color: #24b47e;
+}
+
+/* Confirm Page */
+
+.confirm__purchase {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 10vh;
+}
+
+.confirm__purchase .confirm__container {
+  color: inherit;
+  font-size: 18px;
+  text-align: center;
+  cursor: default;
+}
+
+.confirm__container span {
+  margin-top: 20px;
+  display: block;
+}
+
+.confirm__container a {
+  margin-top: 20px;
+  border-bottom: 3px solid #24b47e;
+}
+
+.confirm__purchase .confirm__help-text {
+  font-weight: 600;
+  font-size: 16px;
+  margin-top: 40px;
+  display: block;
+}
+
+/* Create Account  / Log in */
+
+.create-account {
+  margin-top: 20vh;
 }
