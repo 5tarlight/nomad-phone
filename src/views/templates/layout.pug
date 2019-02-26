@@ -4,13 +4,17 @@ html(lang="en")
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         meta(http-equiv="X-UA-Compatible", content="ie=edge")
+        link(rel="stylesheet", href="/css/styles.css")
         title #{title} | Nomad Phone
     body
-        include ../partials/notices
-        include ../partials/flash
-        include ../partials/header
-        main
-            if error
-                div
-                    span=error
-            block content
+        .wrapper
+            include ../partials/notices
+            include ../partials/flash
+            include ../partials/header
+            main
+                if error
+                    div
+                        span=error
+                block content
+        
+        block scripts

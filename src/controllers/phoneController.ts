@@ -18,7 +18,7 @@ const searchNumbers = async (req: Request, res: Response) => {
   let numbers = null;
   let error = false;
   let price;
-  if (country) {
+  if (country && country !== "NONE") {
     try {
       const {
         data: { available_phone_numbers }
@@ -177,8 +177,10 @@ const handleNewMessage = async (req, res) => {
   res.end().status(200);
   try {
     const owner = await prisma.number({ number: To }).owner();
-    if (owner) {
+    if (owner && owner.isVerified) {
       sendNewSMSMail(From, Body, owner.email);
+    } else {
+      return;
     }
   } catch (e) {
     console.log(e);

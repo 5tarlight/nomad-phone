@@ -1,22 +1,29 @@
 extends templates/layout
 
 block content
-    form(action="/",method="get")
-        span Buy phone by country
-        select#countries(name="country")
-            each country in availableCountries
-                if country.code === searchingBy
-                    option(value=country.code, selected)=`${country.flag} ${country.name}`
-                else
-                    option(value=country.code)=`${country.flag} ${country.name}`
-        input(type="submit", value="Search")
+    .search
+        div.search__hero
+            h2 Get SMS from anywhere.
+            form(action="/",method="get")#js-countryForm.search__form
+                span Get a phone number from:
+                select#countries(name="country")
+                    option(value="NONE") 🌎 Choose Country
+                    each country in availableCountries
+                        if country.code === searchingBy
+                            option(value=country.code, selected)=`${country.flag} ${country.name}`
+                        else
+                            option(value=country.code)=`${country.flag} ${country.name}`
 
-    if error || (numbers && numbers.length === 0)
-        span There are no numbers available on your selected country
-    else if numbers
-        span=`Price per month: $${price}`
-        ul
-            each number in numbers
-                li
-                    span=number.friendly_name
-                    a(href=`/numbers/rent/${searchingBy}/${number.phone_number}`) Rent
+            if error || (numbers && numbers.length === 0)
+                span There are no numbers available on your selected country
+            else if numbers
+                span=`Price per month: $${price}`
+                ul
+                    each number in numbers
+                        li
+                            span=number.friendly_name
+                            a(href=`/numbers/rent/${searchingBy}/${number.phone_number}`) Rent
+
+
+block scripts
+    script(src="/js/countrySelect.js")

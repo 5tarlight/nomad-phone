@@ -1,0 +1,8 @@
+.accentBtn {
+  background-color: white;
+  padding: 7px 12px;
+  box-shadow: 0 2px 4px rgba(50, 50, 93, 0.1);
+  border-radius: 5px;
+  color: #24b47e;
+  cursor: pointer;
+}

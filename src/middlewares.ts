@@ -1,5 +1,6 @@
 export const localsMiddleware = (req, res, next) => {
   res.locals.currentUser = req.user;
+  res.locals.siteName = "Nomad Phone 🌴";
   next();
 };
 

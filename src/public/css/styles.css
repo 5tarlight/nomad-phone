@@ -1,0 +1,94 @@
+@import "./reset.css";
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600");
+@import "./utils.css";
+
+/*
+    Colors:
+        green: #24b47e
+
+*/
+
+body {
+  background-color: #f5f9fc;
+  color: #525f7f;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 28px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.wrapper {
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Header */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 0px;
+}
+
+.header .header__title {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.header__nav .header__nav-list {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header__nav-list .header__list-item:not(:last-child) {
+  margin-right: 20px;
+}
+
+/* Search Page */
+
+.search {
+  margin-top: 20vh;
+  min-height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search .search__hero {
+  text-align: center;
+}
+
+.search__hero h2 {
+  font-size: 28px;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
+
+.search .search__form {
+  font-size: 24px;
+}
+
+.search__form span {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+.search__form select {
+  border: 0;
+  height: 40px;
+  padding: 5px 10px;
+  font-size: 22px;
+  margin-bottom: 20px;
+  all: unset;
+  border-bottom: 3px solid #24b47e;
+  padding-bottom: 5px;
+  margin-right: 10px;
+}
+
+.search__form input[type="submit"] {
+  border: 0;
+  font-size: 22px;
+}

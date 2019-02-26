@@ -1,18 +1,18 @@
-header
-    h1 
-        a(href="/") Nomad Phone
-    div
+header.header
+    h1.header__title
+        a(href="/") #{siteName}
+    nav.header__nav
         if !currentUser
-            ul
-                li
-                    a(href="/create-account") Create Account
-                li
+            ul.header__nav-list
+                li.header__list-item
+                    a(href="/create-account").header__link.accentBtn Create Account
+                li.header__list-item
                     a(href="/log-in") Log In
         else
-            ul
-                li
-                    a(href="/dashboard") Dashboard
-                li
-                    a(href="/users/account") Account
-                li
-                    a(href="/log-out") Log Out
+            ul.header__nav-list
+                li.header__list-item
+                    a(href="/dashboard").header__link Dashboard
+                li.header__list-item
+                    a(href="/users/account").header__link Account
+                li.header__list-item
+                    a(href="/log-out").header__link Log Out
