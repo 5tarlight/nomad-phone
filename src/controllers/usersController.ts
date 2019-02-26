@@ -20,7 +20,6 @@ const dashboard = async (req, res) => {
 
 const createAccount = async (req, res) => {
   const { method } = req;
-  let error;
   if (method === "POST") {
     const {
       body: { email, password }
@@ -39,13 +38,16 @@ const createAccount = async (req, res) => {
         req.flash("success", "Account created! Log in now");
         return res.redirect("/log-in");
       } else {
-        error = "This user has an account already. Maybe try to log in?";
+        req.flash(
+          "error",
+          "This user has an account already. Maybe try to log in?"
+        );
       }
     } catch (e) {
-      error = e;
+      console.log(e);
     }
   }
-  res.render("create-account", { title: "Create An Account", error });
+  res.render("create-account", { title: "Create An Account" });
 };
 
 const logIn = async (req, res) => res.render("login", { title: "Log In" });

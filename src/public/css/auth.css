@@ -1,0 +1,44 @@
+.create-account {
+  margin-top: 20vh;
+}
+
+.create-account .create-account__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.create-account .form__container {
+  max-width: 350px;
+  width: 100%;
+}
+
+.create-account .header {
+  display: block;
+  text-align: center;
+}
+
+.create-account .header .header__title {
+  font-size: 26px;
+  margin-bottom: 10px;
+}
+
+.create-account .header .header__subtitle {
+  font-size: 22px;
+}
+
+.auth .form__container {
+  padding: 40px;
+}
+
+.auth .form__container input:not([type="submit"]) {
+  margin-bottom: 25px;
+  box-shadow: 0 2px 4px rgba(50, 50, 93, 0.1), 0 0 0 1px rgba(42, 47, 69, 0.16);
+}
+
+.auth .form__change-link {
+  margin-top: 50px;
+}
+
+.auth .form__change-link a {
+  margin-left: 10px;
+}

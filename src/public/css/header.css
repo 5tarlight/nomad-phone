@@ -1,0 +1,20 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 0px;
+}
+
+.header .header__title {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.header__nav .header__nav-list {
+  display: flex;
+  justify-content: space-between;
+}
+
+.header__nav-list .header__list-item:not(:last-child) {
+  margin-right: 20px;
+}

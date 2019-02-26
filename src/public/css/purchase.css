@@ -1,0 +1,30 @@
+.confirm__purchase {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 10vh;
+}
+
+.confirm__purchase .confirm__container {
+  color: inherit;
+  font-size: 18px;
+  text-align: center;
+  cursor: default;
+}
+
+.confirm__container span {
+  margin-top: 20px;
+  display: block;
+}
+
+.confirm__container a {
+  margin-top: 20px;
+  border-bottom: 3px solid #24b47e;
+}
+
+.confirm__purchase .confirm__help-text {
+  font-weight: 600;
+  font-size: 16px;
+  margin-top: 40px;
+  display: block;
+}

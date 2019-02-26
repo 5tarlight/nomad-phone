@@ -2,6 +2,10 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600");
 @import "./utils.css";
 @import "./flash.css";
+@import "./header.css";
+@import "./index.css";
+@import "./purchase.css";
+@import "./auth.css";
 
 /*
     Colors:
@@ -24,143 +28,4 @@ body {
   max-width: 1000px;
   width: 100%;
   margin: 0 auto;
-}
-
-/* Header */
-
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 25px 0px;
-}
-
-.header .header__title {
-  font-size: 22px;
-  font-weight: 600;
-}
-
-.header__nav .header__nav-list {
-  display: flex;
-  justify-content: space-between;
-}
-
-.header__nav-list .header__list-item:not(:last-child) {
-  margin-right: 20px;
-}
-
-/* Search Page */
-
-.search {
-  margin-top: 20vh;
-  min-height: 40vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  padding-bottom: 20vh;
-}
-
-.search .search__hero {
-  text-align: center;
-  width: 100%;
-}
-
-.search__hero h2 {
-  font-size: 28px;
-  font-weight: 500;
-  margin-bottom: 30px;
-}
-
-.search .search__form {
-  font-size: 24px;
-}
-
-.search__form span {
-  font-size: 24px;
-  margin-right: 10px;
-}
-
-.search__form select {
-  border: 0;
-  height: 40px;
-  padding: 5px 10px;
-  font-size: 22px;
-  margin-bottom: 20px;
-  all: unset;
-  border-bottom: 3px solid #525f7f;
-  padding-bottom: 5px;
-  margin-right: 10px;
-}
-
-.search__form input[type="submit"] {
-  border: 0;
-  font-size: 22px;
-}
-
-.search .results {
-  margin-top: 40px;
-  width: 100%;
-}
-
-.results .results__title {
-  font-size: 18px;
-  margin-bottom: 40px;
-  display: block;
-}
-
-.results .results__list {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  grid-gap: 50px;
-  margin: 0 auto;
-}
-
-.results__list .results__number {
-  color: #24b47e;
-}
-
-/* Confirm Page */
-
-.confirm__purchase {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  margin-top: 10vh;
-}
-
-.confirm__purchase .confirm__container {
-  color: inherit;
-  font-size: 18px;
-  text-align: center;
-  cursor: default;
-}
-
-.confirm__container span {
-  margin-top: 20px;
-  display: block;
-}
-
-.confirm__container a {
-  margin-top: 20px;
-  border-bottom: 3px solid #24b47e;
-}
-
-.confirm__purchase .confirm__help-text {
-  font-weight: 600;
-  font-size: 16px;
-  margin-top: 40px;
-  display: block;
-}
-
-/* Notifications */
-
-.flash {
-}
-
-/* Create Account  / Log in */
-
-.create-account {
-  margin-top: 20vh;
 }

@@ -4,11 +4,15 @@ block header
     span
 
 block content
-    .centerAll  
-        .whiteCard.create-account
-            form(action="/create-account", method="post")
+    .centerAll.create-account.auth
+        .header
+            h1.header__title #{siteName}
+            h3.header__subtitle Create Account
+        .whiteCard.form__container
+            form(action="/create-account", method="post").create-account__form
                 input(type="text", placeholder="Email", name="email")
                 input(type="password", placeholder="Password", name="password")
                 input(type="submit", value="Create Account")
+        .form__change-link
             span Have an account already?
                 a(href="/log-in") Log in! 
