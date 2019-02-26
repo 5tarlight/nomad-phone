@@ -1,0 +1,12 @@
+extends layout
+
+block header
+    span
+
+block content
+    .centerAll.create-account.auth
+        .header
+            a(href="/")
+                h1.header__title #{siteName}
+            h3.header__subtitle #{title}
+        block form

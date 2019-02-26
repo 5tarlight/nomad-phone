@@ -2,7 +2,7 @@
   margin-top: 20vh;
 }
 
-.create-account .create-account__form {
+.create-account .auth__form {
   display: flex;
   flex-direction: column;
 }
@@ -41,4 +41,6 @@
 
 .auth .form__change-link a {
   margin-left: 10px;
+  font-weight: 600;
+  text-decoration: underline;
 }

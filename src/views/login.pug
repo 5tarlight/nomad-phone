@@ -1,10 +1,13 @@
-extends templates/layout
+extends templates/auth
 
-block content
-    form(action="/log-in", method="post")
-        input(type="email", placeholder="Email", name="email", required)
-        input(type="password", placeholder="Password", name="password", required)
-        input(type="submit", value="Log In")
-    a(href="/users/forgot-password") Forgot your password?
-    span Don't have an account?
-        a(href="/create-account") Create one!
+
+block form
+    .whiteCard.form__container
+        form(action="/log-in", method="post").auth__form
+            input(type="email", placeholder="Email", name="email", required)
+            input(type="password", placeholder="Password", name="password", required)
+            input(type="submit", value="Log In")
+        a(href="/users/forgot-password") Forgot your password?
+    .form__change-link
+        span Don't have an account?
+            a(href="/create-account") Create one!
