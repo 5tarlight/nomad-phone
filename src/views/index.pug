@@ -2,7 +2,7 @@ extends templates/layout
 
 block content
     .search
-        div.search__hero
+        .search__hero
             h2 Get SMS from anywhere.
             form(action="/",method="get")#js-countryForm.search__form
                 span Get a phone number from:
@@ -17,12 +17,13 @@ block content
             if error || (numbers && numbers.length === 0)
                 span There are no numbers available on your selected country
             else if numbers
-                span=`Price per month: $${price}`
-                ul
-                    each number in numbers
-                        li
-                            span=number.friendly_name
-                            a(href=`/numbers/rent/${searchingBy}/${number.phone_number}`) Rent
+                .results
+                    span.results__title Claim a number for just $#{price} per month:
+                    ul.results__list
+                        each number in numbers
+                            a(href=`/numbers/rent/${searchingBy}/${number.phone_number}`)
+                                li.results__number.accentBtn
+                                    span=number.friendly_name
 
 
 block scripts

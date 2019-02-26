@@ -55,10 +55,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
 }
 
 .search .search__hero {
   text-align: center;
+  width: 100%;
 }
 
 .search__hero h2 {
@@ -91,4 +93,26 @@ body {
 .search__form input[type="submit"] {
   border: 0;
   font-size: 22px;
+}
+
+.search .results {
+  margin-top: 40px;
+  width: 100%;
+}
+
+.results .results__title {
+  font-size: 18px;
+  margin-bottom: 40px;
+  display: block;
+}
+
+.results .results__list {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-gap: 50px;
+  margin: 0 auto;
+}
+
+.results__list .results__number {
 }
